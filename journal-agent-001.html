@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Science, Art & Architecture of My Salesforce Agent #001</title>
+<meta name="description" content="A teardown of Agent #001: the topic selector, the RAG-grounded FAQ layer, the boundaries it protects, and why messy data kills agents long before prompts do.">
+<link rel="canonical" href="https://theagentsforce.com/journal-agent-001.html">
+<meta name="author" content="Hari Om Vashishtha">
+<meta name="theme-color" content="#04101f">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The Agents Force">
+<meta property="og:title" content="The Science, Art & Architecture of My Salesforce Agent #001">
+<meta property="og:description" content="A teardown of Agent #001: the topic selector, the RAG-grounded FAQ layer, the boundaries it protects, and why messy data kills agents long before prompts do.">
+<meta property="og:url" content="https://theagentsforce.com/journal-agent-001.html">
+<meta property="og:image" content="https://theagentsforce.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Agents Force — one agent, one hypothesis, one goal.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Science, Art & Architecture of My Salesforce Agent #001">
+<meta name="twitter:description" content="A teardown of Agent #001: the topic selector, the RAG-grounded FAQ layer, the boundaries it protects, and why messy data kills agents long before prompts do.">
+<meta name="twitter:image" content="https://theagentsforce.com/assets/og-cover.jpg">
+<meta name="twitter:creator" content="@hov8a">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Science, Art, & Architecture of My Salesforce Agent #001",
+  "datePublished": "2026-03-08",
+  "author": { "@type": "Person", "name": "Hari Om Vashishtha", "url": "https://theagentsforce.com/" },
+  "publisher": { "@type": "Organization", "name": "The Agents Force" },
+  "mainEntityOfPage": "https://theagentsforce.com/journal-agent-001.html",
+  "image": "https://theagentsforce.com/assets/og-cover.jpg"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-name">The <span class="g">Agents</span> Force</span>
+    <span class="brand-tag">Connecting the dots</span>
+  </a>
+  <nav class="site-nav" aria-label="Primary"><a href="index.html#agents">Agents</a><a href="index.html#how">How it works</a><a href="index.html#about">About me</a><a href="journal.html" class="is-active" aria-current="page">Journal</a><a href="https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP" target="_blank" rel="noopener noreferrer">Thesis</a></nav>
+  <a class="btn btn-primary btn-sm" href="https://calendar.app.google/SUfhrngH4TPw91fn6" target="_blank" rel="noopener noreferrer">Work with me</a>
+</header>
+<main id="main" class="article">
+  <div class="article-wrap">
+    <a class="article-back" href="journal.html">&larr; Journal</a>
+    <div class="article-meta">
+      <span>Open Source Humans &mdash; Edition 11</span>
+      <time class="dim" datetime="2026-03-08">8 March 2026</time>
+      <span class="dim">7 min read</span>
+    </div>
+    <h1>The Science, Art, &amp; Architecture of My Salesforce <span class="g">Agent #001</span></h1>
+    <div style="margin: var(--space-8) 0"><div class="divider-gold"></div></div>
+    
+<p>Everyone is building AI agents right now. New tools appear every week &mdash; copilots, autonomous
+assistants, multi-agent systems. The vocabulary is expanding faster than most of us can properly
+evaluate it.</p>
+
+<p>This is a breakdown of the science, art, and architecture of Agent #001: the conversational
+interface behind my project, <a href="https://3mistakesofmylife.in/" target="_blank" rel="noopener noreferrer">3MistakesOfMyLife.in</a>.</p>
+
+<h2>Start with the word &ldquo;science&rdquo;</h2>
+<p>Science is the disciplined process of observing reality, identifying patterns, forming hypotheses,
+testing them against the world, and refining understanding based on evidence. In simple terms: a
+structured method for interacting with reality.</p>
+<p>We are entering an era where artificial intelligence participates in that interaction. Agents are
+not just software &mdash; they are systems designed to engage humans through the most fundamental
+human mechanism there is: conversation. And conversation is not casual. It is highly structured.</p>
+
+<blockquote>A conversation is a very scientific event involving many forces of nature to yield maximum
+benefits for all involved parties, depending upon the match in frequencies, intents, and uncovered
+assumptions.</blockquote>
+
+<p>Every conversation carries invisible forces: intentions, attention, language, emotional states,
+assumptions, mental models. When they align, conversations create clarity. When they do not, they
+produce confusion and wasted effort.</p>
+<p>Most of us are not disciplined, and most of us do not practise much self-awareness. Without those
+two things, conversations become reactive instead of constructive: assumptions stay hidden,
+intentions stay unclear, decisions become inconsistent. In a world increasingly shaped by intelligent
+systems, that gap matters more, not less.</p>
+
+<h2>A note from the beginning</h2>
+<p>About a year ago a mentor told me that a great many Agentforce agents were being deployed, and a
+great many of them were failing &mdash; not because the technology was weak, but because the
+architecture behind them was. The industry, he said, is going to need critical thinkers who can
+design these systems properly.</p>
+<p>So I started learning the ABCs of Agentforce. I am a slow learner, but persistent. Today I have my
+first agent running. Is it impressive? Not really &mdash; it is barely up to the mark compared to the
+best out there. That is fine. I am not a specialist yet. I am working on it, four hours a day.</p>
+
+<h2>The project behind the agent</h2>
+<p>3 Mistakes of My Life is a discipline programme for kids, built in collaboration with parents. The
+premise is simple: if the next generation grows up in a world shaped by AI, they will need stronger
+foundations in discipline, reflection, self-awareness, and structured thinking. Those are not
+developed through lectures &mdash; they come from guided conversations and deliberate practice.</p>
+<p>Parents participate alongside their kids. Mentors guide the parents. Discipline becomes a
+measurable practice rather than a vague concept. Agent #001 is the first conversational interface
+into that system.</p>
+
+<h2>Current architecture</h2>
+<p>Agent #001 is extremely basic. It performs one primary function: it explains the project. There is
+no persuasion layer, no onboarding automation, no behavioural coaching, no lifecycle engagement. It
+introduces the project and answers questions from a structured knowledge library, through a small set
+of conversational topics.</p>
+
+<div class="blueprint">
+  <p class="bp-title">Inside Agent #001: <span class="g">a blueprint for AI agent architecture</span></p>
+  <p class="bp-lede">Where a message goes, and what it touches on the way.</p>
+
+  <div class="bp-section">
+    <p class="bp-label">The conversational routing engine</p>
+    <div class="bp-flow">
+      <div class="bp-step">
+        <div class="bp-marker"><span class="bp-num">1</span><span class="bp-line"></span></div>
+        <div class="bp-body"><p class="bp-name">User message</p>
+        <p class="bp-desc">Every interaction enters through the website.</p></div>
+      </div>
+      <div class="bp-step">
+        <div class="bp-marker"><span class="bp-num">2</span><span class="bp-line"></span></div>
+        <div class="bp-body"><p class="bp-name">Clarity filters</p>
+        <p class="bp-desc">Handles ambiguous questions, and redirects off-topic inquiries.</p></div>
+      </div>
+      <div class="bp-step">
+        <div class="bp-marker"><span class="bp-num">3</span><span class="bp-line"></span></div>
+        <div class="bp-body"><p class="bp-name">The Topic Selector router</p>
+        <p class="bp-desc">Identifies intent and routes the query from every user message.</p></div>
+      </div>
+      <div class="bp-step">
+        <div class="bp-marker"><span class="bp-num">4</span><span class="bp-line"></span></div>
+        <div class="bp-body"><p class="bp-name">RAG-grounded Project FAQs</p>
+        <p class="bp-desc">Answers pulled from structured knowledge, not generated from scratch.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bp-section">
+    <p class="bp-label">Three layers, kept separate</p>
+    <div class="bp-layers">
+      <div class="bp-layer"><p class="bp-name">The experience layer</p>
+      <p class="bp-desc">Frontend interface for user interactions via the website.</p></div>
+      <div class="bp-layer"><p class="bp-name">The conversation layer</p>
+      <p class="bp-desc">The &ldquo;brain&rdquo; (Agent #001) interpreting intent and managing information flow.</p></div>
+      <div class="bp-layer"><p class="bp-name">The data layer</p>
+      <p class="bp-desc">Foundational Salesforce environment for structured records and interaction histories.</p></div>
+    </div>
+  </div>
+
+  <div class="bp-section">
+    <p class="bp-label">Where it is, and where it goes next</p>
+    <table class="bp-table">
+      <thead><tr><th scope="col">Functional phase</th><th scope="col">Architecture components</th><th scope="col">Agent capability</th></tr></thead>
+      <tbody>
+        <tr>
+          <th scope="row">Current &mdash; awareness</th>
+          <td data-label="Architecture components">Knowledge library &amp; Topic Selector</td>
+          <td data-label="Agent capability">Explaining project philosophy and answering FAQs</td>
+        </tr>
+        <tr>
+          <th scope="row">Next &mdash; operational</th>
+          <td data-label="Architecture components">Logging &amp; mentor registration</td>
+          <td data-label="Agent capability">Tracking interaction data and capturing structured mentor leads</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>Topic Selector</h3>
+<p>Every user message passes through the Topic Selector first. Its job is to understand intent and
+route the conversation to the correct topic &mdash; the conversation router.</p>
+
+<h3>Project FAQs</h3>
+<p>Questions about the programme activate Project FAQs, which retrieves from the knowledge library
+using retrieval-augmented generation. Instead of generating blindly, the agent references
+documentation drawn from the live site. Responses stay grounded in the actual project.</p>
+
+<h3>Off Topic</h3>
+<p>Anything outside scope gets a gentle redirect &mdash; &ldquo;I&rsquo;m here to help with the
+discipline program. Would you like to know how it works?&rdquo; This protects the boundaries of the
+system.</p>
+
+<h2>The architectural principle</h2>
+<blockquote>Agents should sit between experience and data &mdash; not replace either.</blockquote>
+<p>Experience happens on the website. The agent acts as a conversation layer. Structured records
+eventually live in a Salesforce data layer. Keeping those layers separate lets the system evolve
+without breaking the conversation interface.</p>
+
+<h2>What is missing</h2>
+<p>Right now the agent supports exactly one stage: awareness. Everything else is still to be built.</p>
+<ul>
+  <li>Parent onboarding</li><li>Mentor registration</li><li>Mentor-family matching</li>
+  <li>Discipline session logging</li><li>Behavioural progress tracking</li><li>Referral loops</li>
+  <li>Payment systems</li>
+</ul>
+<p>The business architecture exists conceptually. The operational layers are under construction.</p>
+
+<h2>Data before intelligence</h2>
+<p>One thing is already clear: agents do not fail because of prompts. They fail because the underlying
+data architecture is messy. Most CRM environments struggle with inconsistent objects, incomplete
+fields, and fragmented interaction histories. Introduce an agent into that and it simply amplifies the
+chaos.</p>
+<p>Before expanding an agent&rsquo;s intelligence, the system has to define clean data structures,
+traceable interaction records, and clear ownership of information. Only then does the agent become
+useful.</p>
+
+<h2>The next iteration</h2>
+<p><strong>Conversation logging.</strong> Conversations are currently stored nowhere. Logging them
+tells us what users ask, where conversations break, and whether the agent is improving.</p>
+<p><strong>Mentor registration.</strong> Collecting name, email, location, and background inside the
+conversation itself &mdash; the first structured dataset for the mentor ecosystem.</p>
+
+<h2>A note to system integrators</h2>
+<p>The questions in this project show up inside almost every Salesforce implementation today. How do
+we structure data so agents can reason correctly? How do we design conversational systems that
+actually support business workflows? How do we move from experimentation to measurable outcomes?</p>
+<p>If you are a Salesforce system integrator exploring Agentforce, I would genuinely like to hear how
+you are approaching these problems. I am building this in public, and I will keep documenting the
+architecture as it evolves.</p>
+
+    <div style="margin: var(--space-12) 0 var(--space-8)"><div class="divider-gold"></div></div>
+    <p>Agent #001 is just getting started.</p>
+    <div class="article-links">
+      <a href="https://calendar.app.google/SUfhrngH4TPw91fn6" target="_blank" rel="noopener noreferrer">Book a conversation</a>
+      <a href="https://nothingelsematterz.com/2026/03/the-science-art-architecture-of-my-salesforce-agent-001-behind-3mistakesofmylife-in/" target="_blank" rel="noopener noreferrer">Original post</a>
+    </div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="divider-gold"></div>
+    <div class="site-footer-row">
+      <div class="site-footer-copy">theagentsforce.com &mdash; a project of Unfinished Innovations LLP. &copy;2026.</div>
+      <div class="site-footer-links"><a href="https://youtube.com/playlist?list=PLhMmOSOqNYXgdHJ0fJVtwaiwgZ601X5uQ&amp;si=Ixzyp-0OKh1JJ1HI" target="_blank" rel="noopener noreferrer">YouTube</a><a href="https://www.linkedin.com/in/hov8a/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://x.com/hov8a" target="_blank" rel="noopener noreferrer">X</a></div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
