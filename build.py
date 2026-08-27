@@ -36,7 +36,9 @@ SITE = {
 GA_MEASUREMENT_ID = "G-ZM2HP8YTXB"
 
 LINKS = {
-    "thesis":   "https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP",
+    "thesis":   "https://docs.google.com/document/d/157b6_cHT56PZEqKb5SWV6kdMRtgs3RzCIivMjhwPP6c/edit?usp=sharing",
+    "thesis_agent": "https://orgfarm-3a666335d9-dev-ed.develop.my.site.com/NothingElseMatterzDotCom/",
+    "mdcp":     "https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP",
     "youtube":  "https://youtube.com/playlist?list=PLhMmOSOqNYXgdHJ0fJVtwaiwgZ601X5uQ&si=Ixzyp-0OKh1JJ1HI",
     "linkedin": "https://www.linkedin.com/in/hov8a/",
     "x":        "https://x.com/hov8a",
@@ -72,7 +74,7 @@ AGENTS = [
         "title": "Hermes &mdash; Million Dollar Consistency Partner",
         "description": "A five-agent pipeline that turns daily working sessions into compounding output.",
         "icon": "workflow",
-        "href": LINKS["thesis"],
+        "href": LINKS["mdcp"],
         "cta": "View on GitHub",
     },
 ]
