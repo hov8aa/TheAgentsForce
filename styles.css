@@ -253,11 +253,10 @@ a:hover { color: var(--gold-200); }
   background: var(--surface-card); border-radius: var(--radius-lg);
   border: var(--border-w-gold) solid var(--border-gold-soft);
   padding: var(--space-6) var(--space-5); box-shadow: var(--shadow-card);
-  text-decoration: none; color: inherit;
   transition: transform var(--dur-md) var(--ease-out), box-shadow var(--dur-md) var(--ease-out),
               border-color var(--dur-md) var(--ease-out);
 }
-a.agent-card:hover { transform: translateY(-4px); border-color: var(--gold-400); box-shadow: var(--shadow-gold-glow); }
+.agent-card:hover { transform: translateY(-4px); border-color: var(--gold-400); box-shadow: var(--shadow-gold-glow); }
 .agent-step {
   font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--fs-h3); line-height: 1;
   background: var(--gradient-gold-text); -webkit-background-clip: text; background-clip: text;
@@ -269,12 +268,21 @@ a.agent-card:hover { transform: translateY(-4px); border-color: var(--gold-400);
   font-family: var(--font-display); font-weight: var(--fw-bold); font-size: var(--fs-h4);
   color: var(--gold-300); line-height: var(--lh-snug); margin: var(--space-4) 0 var(--space-3);
 }
-.agent-desc { font-size: var(--fs-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
-.agent-more {
-  margin-top: auto; padding-top: var(--space-4);
+.agent-badge {
   font-size: var(--fs-caption); font-weight: var(--fw-semibold); letter-spacing: var(--ls-caps);
-  text-transform: uppercase; color: var(--gold-400);
+  text-transform: uppercase; color: var(--text-disabled); margin: calc(-1 * var(--space-2)) 0 var(--space-3);
 }
+.agent-desc { font-size: var(--fs-body-sm); color: var(--text-muted); line-height: var(--lh-body); }
+.agent-actions {
+  margin-top: auto; padding-top: var(--space-4);
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.agent-action {
+  font-size: var(--fs-caption); font-weight: var(--fw-semibold); letter-spacing: var(--ls-caps);
+  text-transform: uppercase; color: var(--gold-400); text-decoration: none;
+  transition: color var(--dur-md) var(--ease-out);
+}
+.agent-action:hover { color: var(--gold-300); text-decoration: underline; }
 
 /* ---------- Process ---------- */
 .process-head {

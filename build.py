@@ -62,20 +62,25 @@ AGENTS = [
         "icon": "graduation-cap",
         "href": LINKS["thesis"],
         "cta": "Read the thesis",
+        "agent_href": LINKS["thesis_agent"],
+        "agent_cta": "Try the agent",
     },
     {
         "title": "3MoMLife &mdash; Discipline Agent",
         "description": "Salesforce Agentforce agent built on the 3MistakesOfMyLife.in discipline programme.",
         "icon": "database",
         "href": "journal-agent-001.html",
-        "cta": "Read the teardown",
+        "cta": "Read the architecture",
+        "agent_href": LINKS["project"],
+        "agent_cta": "Try the agent",
     },
     {
         "title": "Hermes &mdash; Million Dollar Consistency Partner",
         "description": "A five-agent pipeline that turns daily working sessions into compounding output.",
         "icon": "workflow",
         "href": LINKS["mdcp"],
-        "cta": "View on GitHub",
+        "cta": "View framework on GitHub",
+        "badge": "Private agent &mdash; not yet public",
     },
 ]
 
@@ -327,21 +332,27 @@ def page_index():
 
     cards = []
     for i, a in enumerate(AGENTS, start=1):
+        badge = f'<p class="agent-badge">{a["badge"]}</p>' if a.get("badge") else ""
         inner = (
             f'<div class="agent-step" aria-hidden="true">{i}</div>'
             f'<div class="agent-icon">{icon(a["icon"])}</div>'
             f'<h3 class="agent-title">{a["title"]}</h3>'
+            f'{badge}'
             f'<p class="agent-desc">{a["description"]}</p>'
         )
-        if a["href"]:
+        actions = []
+        if a.get("href"):
             cta = a.get("cta", "Read more")
-            arrow = " &rarr;"
-            cards.append(
-                f'<a class="agent-card" href="{esc(a["href"])}"{link_attrs(a["href"])}>'
-                f'{inner}<div class="agent-more">{cta}{arrow}</div></a>'
+            actions.append(
+                f'<a class="agent-action" href="{esc(a["href"])}"{link_attrs(a["href"])}>{cta} &rarr;</a>'
             )
-        else:
-            cards.append(f'<div class="agent-card">{inner}</div>')
+        if a.get("agent_href"):
+            agent_cta = a.get("agent_cta", "Try the agent")
+            actions.append(
+                f'<a class="agent-action" href="{esc(a["agent_href"])}"{link_attrs(a["agent_href"])}>{agent_cta} &rarr;</a>'
+            )
+        actions_html = f'<div class="agent-actions">{"".join(actions)}</div>' if actions else ""
+        cards.append(f'<div class="agent-card">{inner}{actions_html}</div>')
 
     steps = "".join(
         f'<div class="card card-plain card-pad-8 process-card">'
