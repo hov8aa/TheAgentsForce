@@ -2,8 +2,8 @@
 
 Static site for [theagentsforce.com](https://theagentsforce.com), hosted on GitHub Pages.
 
-No frameworks, no CDNs, no third-party requests. Every byte the visitor loads is served
-from this repo.
+No frameworks, no CDNs, no build toolchain. Every asset the visitor loads is served from
+this repo; the only third-party request on the site is Google Analytics.
 
 ---
 
@@ -29,6 +29,7 @@ section marked `CONTENT`:
 | About copy and the three facts | `ABOUT` |
 | Journal posts on `journal.html` | `POSTS` |
 | Calendar / LinkedIn / X / YouTube links | `LINKS` |
+| Google Analytics property | `GA_MEASUREMENT_ID` |
 
 Then run:
 
@@ -68,11 +69,25 @@ CNAME  .nojekyll               GitHub Pages configuration
 
 ---
 
+## Analytics
+
+Google Analytics 4 (`G-ZM2HP8YTXB`) runs on every page, including `404.html` — useful for
+spotting dead inbound links. The tag is emitted by the `analytics()` function in `build.py`
+and sits last in `<head>`: it is `async`, so the browser still discovers it early, but the
+stylesheet and font preload get the first round trip.
+
+To remove tracking from the whole site, set `GA_MEASUREMENT_ID = ""` in `build.py` and
+re-run it. To swap properties, change the ID and re-run.
+
+Note: the site sets analytics cookies with no consent prompt. If a meaningful share of
+traffic comes from the EU or UK, that needs either a consent banner or a cookieless
+analytics tool.
+
 ## Performance
 
-A first visit to the homepage is **~135 KB across 8 requests**, all first-party.
-The HTML contains the full page text, so social crawlers and search engines see the
-content without running any JavaScript.
+A first visit to the homepage is **~135 KB across 9 requests**, of which 8 are served from
+this repo and one is the Google Analytics tag. The HTML contains the full page text, so
+social crawlers and search engines see the content without running any JavaScript.
 
 ## Accessibility
 

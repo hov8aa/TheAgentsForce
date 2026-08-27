@@ -32,6 +32,9 @@ SITE = {
     "og_image": "assets/og-cover.jpg",
 }
 
+# Google Analytics 4. Set to "" to strip tracking from every page.
+GA_MEASUREMENT_ID = "G-ZM2HP8YTXB"
+
 LINKS = {
     "thesis":   "https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP",
     "youtube":  "https://youtube.com/playlist?list=PLhMmOSOqNYXgdHJ0fJVtwaiwgZ601X5uQ&si=Ixzyp-0OKh1JJ1HI",
@@ -192,6 +195,26 @@ def btn(href, label, variant="primary", size=None):
     return f'<a class="{cls}" href="{esc(href)}"{link_attrs(href)}>{label}</a>'
 
 
+def analytics():
+    """Google tag (gtag.js).
+
+    Placed last in <head> on purpose: it is async, so the browser finds it via
+    the preload scanner anyway, and putting it after the stylesheet and font
+    preload keeps analytics from competing with them for the first round trip.
+    """
+    if not GA_MEASUREMENT_ID:
+        return ""
+    return f"""<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_MEASUREMENT_ID}');
+</script>
+"""
+
+
 def head(title, description, page_url, *, og_type="website", extra=""):
     og_image = f'{SITE["url"]}/{SITE["og_image"]}'
     canonical = f'{SITE["url"]}/{page_url}' if page_url != "index.html" else SITE["url"] + "/"
@@ -225,7 +248,7 @@ def head(title, description, page_url, *, og_type="website", extra=""):
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-{extra}</head>
+{extra}{analytics()}</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 """
