@@ -167,7 +167,7 @@ NAV = [
     ("How it works", "index.html#how", False),
     ("About me", "index.html#about", False),
     ("Journal", "journal.html", False),
-    ("Thesis", LINKS["thesis"], True),
+    ("Thesis", LINKS["mdcp"], True),
 ]
 
 # =============================================================================
