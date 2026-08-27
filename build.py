@@ -35,6 +35,13 @@ SITE = {
 # Google Analytics 4. Set to "" to strip tracking from every page.
 GA_MEASUREMENT_ID = "G-ZM2HP8YTXB"
 
+# Bump this any time styles.css changes. GitHub Pages' CDN and browsers cache
+# styles.css hard since the URL never changes on its own — without a version
+# bump, a CSS push can go live in the HTML while the stylesheet itself keeps
+# serving the old cached copy. Changing this string changes the URL, which
+# forces a fresh fetch everywhere.
+CSS_VERSION = "2"
+
 LINKS = {
     "thesis":   "https://docs.google.com/document/d/157b6_cHT56PZEqKb5SWV6kdMRtgs3RzCIivMjhwPP6c/edit?usp=sharing",
     "thesis_agent": "https://orgfarm-3a666335d9-dev-ed.develop.my.site.com/NothingElseMatterzDotCom/",
@@ -254,7 +261,7 @@ def head(title, description, page_url, *, og_type="website", extra=""):
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v={CSS_VERSION}">
 {extra}{analytics()}</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
