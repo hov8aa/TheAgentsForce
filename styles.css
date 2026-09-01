@@ -1,7 +1,8 @@
 /* ==========================================================================
    The Agents Force — single stylesheet
    Tokens preserved from the original design system (tokens/*.css).
-   Fonts are self-hosted: no third-party requests anywhere on this site.
+   Fonts are self-hosted. Third-party requests are limited to Google Analytics
+   and, on the homepage only, reCAPTCHA for the Web-to-Lead form.
    ========================================================================== */
 
 /* ---------- Fonts (self-hosted, latin subset, ~7 KB each) ---------- */
@@ -543,4 +544,94 @@ a:hover { color: var(--gold-200); }
   .about-fact { grid-template-columns: 1fr; gap: var(--space-1); }
   .hero-actions .btn, .about-actions .btn { flex: 1 1 auto; padding: 0 16px; }
   .article blockquote { padding: var(--space-5); }
+}
+
+/* ---------- Hire / Web-to-Lead form ---------- */
+.hire-grid {
+  display: grid; grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--space-16); align-items: start;
+}
+.hire-title {
+  font-family: var(--font-display); margin: 0 0 var(--space-6);
+  font-size: var(--fs-h2); font-weight: var(--fw-bold);
+  line-height: var(--lh-display); letter-spacing: var(--ls-display); color: var(--white);
+}
+.hire-title .g { color: var(--gold-300); }
+.hire-lede {
+  font-size: var(--fs-body-lg); color: var(--text-muted);
+  line-height: var(--lh-body); margin: 0 0 var(--space-8);
+}
+.hire-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+.hire-steps li {
+  display: grid; grid-template-columns: 28px 1fr; gap: var(--space-4);
+  align-items: start; color: var(--text-muted); font-size: var(--fs-body-sm);
+}
+.hire-steps .n {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border-gold-soft); color: var(--gold-300);
+  font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+}
+.hire-proof {
+  margin-top: var(--space-8); padding-top: var(--space-6);
+  border-top: 1px solid var(--border-hairline);
+  font-size: var(--fs-body-sm); color: var(--text-subtle);
+}
+.hire-proof strong { color: var(--gold-300); font-weight: var(--fw-semibold); }
+
+.hire-form { display: grid; gap: var(--space-5); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+.field { display: grid; gap: var(--space-2); }
+.field label {
+  font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-caps); text-transform: uppercase; color: var(--gold-400);
+}
+.field label .opt {
+  color: var(--text-disabled); font-weight: var(--fw-regular);
+  letter-spacing: 0; text-transform: none;
+}
+.field input, .field select, .field textarea {
+  width: 100%; font-family: var(--font-body); font-size: var(--fs-body);
+  color: var(--text-body); background: var(--surface-inset);
+  border: var(--border-w-hairline) solid var(--border-hairline);
+  border-radius: var(--radius-sm); padding: 0 var(--space-4);
+  height: var(--control-h-md); -webkit-appearance: none; appearance: none;
+  transition: border-color var(--dur-md) var(--ease-out),
+              box-shadow var(--dur-md) var(--ease-out),
+              background var(--dur-md) var(--ease-out);
+}
+.field textarea {
+  height: auto; min-height: 118px; padding: var(--space-3) var(--space-4);
+  line-height: var(--lh-body); resize: vertical;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--text-disabled); }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--border-gold-soft); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; background: rgba(4,16,31,0.75);
+  border-color: var(--gold-400); box-shadow: 0 0 0 3px rgba(227,167,44,0.16);
+}
+.field select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f0be4e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right var(--space-4) center;
+  background-size: 16px; padding-right: var(--space-10);
+}
+.field select option { background: var(--navy-850); color: var(--text-body); }
+
+.form-captcha { margin-top: var(--space-1); }
+.form-actions {
+  display: flex; align-items: center; gap: var(--space-5);
+  flex-wrap: wrap; margin-top: var(--space-1);
+}
+.form-actions .btn { border: none; }
+.form-legal {
+  font-size: var(--fs-caption); color: var(--text-disabled);
+  margin: 0; max-width: 42ch; line-height: var(--lh-snug);
+}
+
+@media (max-width: 900px) {
+  .hire-grid { grid-template-columns: 1fr; gap: var(--space-12); }
+}
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+  .form-actions .btn { width: 100%; }
 }
