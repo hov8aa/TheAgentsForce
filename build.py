@@ -57,11 +57,19 @@ LINKS = {
 # Salesforce Web-to-Lead. The OID identifies the destination org: if this ever
 # points at the wrong org, submissions still return HTTP 200 and the Lead simply
 # lands somewhere nobody is watching. Verify after any org change.
+#
+# reCAPTCHA must be v2 "I'm not a robot" Checkbox. Web-to-Lead does not support
+# v3 or Enterprise: v3 returns a score and expects the site owner's server to
+# pick a threshold, and there is no server here to put that decision in.
+# A v3 key renders as "ERROR for site owner: Invalid key type".
+#
+# captcha_key must match the API Key Pair nickname in Salesforce exactly,
+# including case.
 SALESFORCE = {
-    "oid": "00DdN000012V2K1",
+    "oid": "00DgL000005LHCf",
     "endpoint": "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8",
-    "captcha_key": "theagentsforce",
-    "recaptcha_sitekey": "6Lf1dqEtAAAAAMcWhwIFvoXb5iupZG93lzdSMrfO",
+    "captcha_key": "TheAgentsForce",
+    "recaptcha_sitekey": "6LcNHqMtAAAAAMF2PffjhUXDMeGqLrB8YKtGyqMt",
     "return_url": "https://theagentsforce.com/thanks.html",
     "lead_source": "Web",
     # Enterprise hubs first, per ICP. Anyone outside picks "Somewhere else".
