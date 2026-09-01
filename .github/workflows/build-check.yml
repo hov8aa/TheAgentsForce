@@ -1,0 +1,59 @@
+name: Build check
+
+# Why this exists
+# ---------------
+# The repo holds two representations of the same truth: build.py (the source)
+# and the generated .html files (what GitHub Pages actually serves). Nothing in
+# git enforces that they agree.
+#
+# On 2026-08-28 they stopped agreeing. Commits 9ec6015, 33215f1 and fcf09c8
+# changed the header CTA from "Work with me" to "Hire Me" across four HTML files
+# without touching build.py. The generator still emitted the old labels for three
+# days. Any rebuild would have silently reverted the change: build.py prints file
+# sizes and exits 0 whether or not it just destroyed your positioning.
+#
+# This job regenerates the site and fails if the output differs from what was
+# committed. It runs on PUSH, not as a pre-commit hook, and that distinction is
+# the whole point: commits made through the GitHub API (MCP servers, AI
+# assistants, the web editor) never execute local hooks. Server-side CI is the
+# only place that catches them.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  generated-files-match-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Regenerate the site
+        run: python build.py
+
+      - name: Fail if output disagrees with build.py
+        run: |
+          if git diff --quiet; then
+            echo "Generated files match build.py."
+            exit 0
+          fi
+
+          echo "::error::Generated HTML does not match build.py output."
+          echo ""
+          echo "Files that disagree:"
+          git diff --stat
+          echo ""
+          echo "--- committed (what is live) vs regenerated (what build.py produces) ---"
+          git diff
+          echo ""
+          echo "Someone edited the generated HTML directly instead of the generator."
+          echo "Fix: make the change in build.py, run 'python build.py', commit both."
+          echo "Never hand-edit index.html, journal.html, journal-agent-001.html,"
+          echo "thanks.html, 404.html, sitemap.xml or robots.txt — they are outputs."
+          exit 1
