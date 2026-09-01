@@ -27,7 +27,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -41,6 +41,19 @@
   "areaServed": "Worldwide",
   "knowsAbout": ["Salesforce Agentforce", "AI agent architecture", "CRM data architecture"]
 }
+</script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  // Salesforce's captcha_settings payload needs a fresh timestamp at submit time.
+  function timestamp() {
+    var response = document.getElementById("g-recaptcha-response");
+    if (response == null || response.value.trim() == "") {
+      var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);
+      elems["ts"] = JSON.stringify(new Date().getTime());
+      document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems);
+    }
+  }
+  setInterval(timestamp, 500);
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZM2HP8YTXB"></script>
@@ -58,8 +71,8 @@
     <span class="brand-name">The <span class="g">Agents</span> Force</span>
     <span class="brand-tag">Connecting the dots</span>
   </a>
-  <nav class="site-nav" aria-label="Primary"><a href="index.html#agents" class="is-active" aria-current="page">Agents</a><a href="index.html#how">How it works</a><a href="index.html#about">About me</a><a href="journal.html">Journal</a><a href="https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP" target="_blank" rel="noopener noreferrer">Thesis</a></nav>
-  <a class="btn btn-primary btn-sm" href="https://calendar.app.google/SUfhrngH4TPw91fn6" target="_blank" rel="noopener noreferrer">Hire Me</a>
+  <nav class="site-nav" aria-label="Primary"><a href="index.html#agents" class="is-active" aria-current="page">Agents</a><a href="index.html#how">How it works</a><a href="index.html#about">About me</a><a href="journal.html">Journal</a><a href="https://github.com/hov8aa/Million-Dollar-Consistency-Partner-MDCP" target="_blank" rel="noopener noreferrer">Thesis</a><a href="index.html#hire">Hire me</a></nav>
+  <a class="btn btn-primary btn-sm" href="index.html#hire">Hire Me</a>
 </header>
 <main id="main">
 
@@ -70,7 +83,7 @@
       <h1>One agent. One hypothesis. <span class="g">One goal.</span></h1>
       <p class="hero-sub">I build Agentforce agents on Salesforce and ship them into real workflows &mdash; then publish the architecture, the failures, and the numbers.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://calendar.app.google/SUfhrngH4TPw91fn6" target="_blank" rel="noopener noreferrer">Hire Me</a>
+        <a class="btn btn-primary" href="index.html#hire">Hire Me</a>
         <a class="btn btn-secondary" href="#agents">See the agents</a>
       </div>
     </div>
@@ -124,6 +137,69 @@
         <a class="btn btn-secondary" href="journal.html">Read the journal</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/hov8a/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="hire" class="section section-canvas">
+  <div class="wrap hire-grid">
+    <div>
+      <p class="eyebrow">Hire me</p>
+      <h2 class="hire-title">Tell me what&rsquo;s <span class="g">breaking</span>.</h2>
+      <p class="hire-lede">Not a newsletter signup. This goes straight into a Salesforce Lead record and I read every one myself.</p>
+      <ol class="hire-steps"><li><span class="n">1</span><span>You describe the system that isn&rsquo;t behaving. Be specific &mdash; vague inputs get vague replies.</span></li><li><span class="n">2</span><span>I reply within two working days with what I&rsquo;d want to look at first, whether or not there is an engagement in it.</span></li><li><span class="n">3</span><span>If it is a fit, we scope the 5-day Exploratory Sprint. If it is not, I will say so plainly.</span></li></ol>
+      <p class="hire-proof">This form is a live Salesforce <strong>Web-to-Lead</strong> endpoint running on my own org &mdash; captcha, field mapping and lead routing included. The site is the first system I am asking you to judge.</p>
+    </div>
+    <div class="card card-gold card-pad-8">
+      <form class="hire-form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&amp;orgId=00DdN000012V2K1" method="POST">
+
+        <input type="hidden" name="captcha_settings" value='{"keyname":"theagentsforce","fallback":"true","orgId":"00DdN000012V2K1","ts":""}'>
+        <input type="hidden" name="oid" value="00DdN000012V2K1">
+        <input type="hidden" name="retURL" value="https://theagentsforce.com/thanks.html">
+        <input type="hidden" id="lead_source" name="lead_source" value="Web">
+
+        <div class="field-row">
+          <div class="field">
+            <label for="first_name">First name</label>
+            <input id="first_name" maxlength="40" name="first_name" type="text" autocomplete="given-name" placeholder="Hari">
+          </div>
+          <div class="field">
+            <label for="last_name">Last name</label>
+            <input id="last_name" maxlength="80" name="last_name" type="text" autocomplete="family-name" placeholder="Vashishtha" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Work email</label>
+          <input id="email" maxlength="80" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="company">Company</label>
+            <input id="company" maxlength="40" name="company" type="text" autocomplete="organization" placeholder="Acme Consulting" required>
+          </div>
+          <div class="field">
+            <label for="country_code">Country <span class="opt">(optional)</span></label>
+            <select id="country_code" name="country_code"><option value="">Select&hellip;</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="IN">India</option><option value="AE">United Arab Emirates</option><option value="SG">Singapore</option><option value="DE">Germany</option><option value="NL">Netherlands</option><option value="IE">Ireland</option><option value="OTHER">Somewhere else</option></select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">What is the system doing that it shouldn&rsquo;t?</label>
+          <textarea id="description" name="description" maxlength="2000" placeholder="The part of your Salesforce estate you would least like to explain to a new architect."></textarea>
+        </div>
+
+        <div class="form-captcha">
+          <div class="g-recaptcha" data-sitekey="6Lf1dqEtAAAAAMcWhwIFvoXb5iupZG93lzdSMrfO"></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary btn-lg" type="submit" name="submit">Send it over</button>
+          <p class="form-legal">Goes to my Salesforce org. No list, no sequence, no automated follow-up.</p>
+        </div>
+
+      </form>
     </div>
   </div>
 </section>
