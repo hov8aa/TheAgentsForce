@@ -100,7 +100,7 @@ HIRE = {
 HERO = {
     "eyebrow": "Agent Force Optimization R&amp;D",
     # The headline carries the memory. Keep it short enough to survive a phone.
-    "h1": 'One agent. One hypothesis. <span class="g">One goal.</span> At a Time.',
+    "h1": 'One agent. One hypothesis. <span class="g">One goal.</span> <span class="g">At a Time.</span>',
     "sub": "I build Agentforce agents on Salesforce and ship them into real workflows &mdash; "
            "then publish the architecture, the failures, and the numbers.",
 }
