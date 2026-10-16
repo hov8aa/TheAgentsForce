@@ -31,6 +31,11 @@ pilots never reach this point because nobody agreed what success looked like on 
 
 ## What I've built
 
+**MyAiNativeTown · Agent Learning & Building Program** — my current focus. A 90-day program
+in Bhiwani and Hisar where people learn to build agents by building them, and the start of the
+team I'll work with for the next decade. [The program →](https://myainativetown.com/) ·
+[the manifesto →](https://app.notion.com/p/hov8a/MyAINativeTown-com-the-Manifesto-3c0ff81e5adf81c38ea9ca5a1f8c668a)
+
 **Ph.D.-Style Thesis: Agent God Complexes** — reimagining the hiring industry in the age of
 AI. [Read the thesis →](https://docs.google.com/document/d/157b6_cHT56PZEqKb5SWV6kdMRtgs3RzCIivMjhwPP6c/edit?usp=sharing)
 · [try the agent →](https://orgfarm-3a666335d9-dev-ed.develop.my.site.com/NothingElseMatterzDotCom/)
@@ -48,6 +53,13 @@ working sessions into compounding output.
 
 Newest first. Numbered by break, not by date — most entries are dated; foundational work
 that's still running is marked Ongoing.
+
+### 003 — MyAiNativeTown comes home · 16 October 2026
+
+My current focus project wasn't visible on my professional services home. Added it as card 1
+in the portfolio and gave it its own section, opening with the question an SI leader would ask:
+why start in Bhiwani? The answer is personal, and the section ends on a question I haven't
+answered either: some of them will build with me, some with you.
 
 ### 002 — Static rebuild · 27 August 2026
 
