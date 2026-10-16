@@ -40,7 +40,7 @@ GA_MEASUREMENT_ID = "G-ZM2HP8YTXB"
 # bump, a CSS push can go live in the HTML while the stylesheet itself keeps
 # serving the old cached copy. Changing this string changes the URL, which
 # forces a fresh fetch everywhere.
-CSS_VERSION = "3"
+CSS_VERSION = "4"
 
 LINKS = {
     "thesis":   "https://docs.google.com/document/d/157b6_cHT56PZEqKb5SWV6kdMRtgs3RzCIivMjhwPP6c/edit?usp=sharing",
@@ -52,6 +52,9 @@ LINKS = {
     "book":     "https://calendar.app.google/SUfhrngH4TPw91fn6",
     "journal":  "journal.html",
     "project":  "https://3mistakesofmylife.in/",
+    "town":      "https://myainativetown.com/",
+    "town_log":  "https://github.com/hov8aa/MyAiNativeTown",
+    "manifesto": "https://app.notion.com/p/hov8a/MyAINativeTown-com-the-Manifesto-3c0ff81e5adf81c38ea9ca5a1f8c668a",
 }
 
 # Salesforce Web-to-Lead. The OID identifies the destination org: if this ever
@@ -106,6 +109,23 @@ HERO = {
 }
 
 AGENTS = [
+    # Current focus project. Kept first on purpose. Uses "actions" (a list of
+    # (label, href)) because it carries three links, not the usual two.
+    {
+        "title": "MyAiNativeTown &middot; Agent Learning &amp; Building Program",
+        "badge": "Cohort 01 &middot; applications open",
+        "badge_live": True,
+        "description": "A 90-day program where freshers and working professionals learn to build AI "
+                       "agents by building them, starting with one real agent for Bhiwani and Hisar. "
+                       "The program runs its own agent, which answers questions about it and writes "
+                       "every log entry in public.",
+        "icon": "map-pin",
+        "actions": [
+            ("See the program", LINKS["town"]),
+            ("Ask the agent", LINKS["town"]),
+            ("Read the build log", LINKS["town_log"]),
+        ],
+    },
     {
         "title": "Ph.D.-Style Thesis: Agent God Complexes",
         "description": "Reimagining the Hiring Industry in the Age of AI.",
@@ -133,6 +153,27 @@ AGENTS = [
         "badge": "Private agent &mdash; not yet public",
     },
 ]
+
+# MyAiNativeTown section, between the portfolio and How it works.
+# Speaks to the SI leader: the question they would ask, answered personally.
+# The closing line is a question on purpose. Do not resolve it.
+TOWN = {
+    "eyebrow": "Next-generation builders",
+    "h2": 'Why would someone building agents for global SIs <span class="g">start in Bhiwani?</span>',
+    "paras": [
+        "I was born here and grew up here. It&rsquo;s where I learned everything first, so it&rsquo;s "
+        "where I&rsquo;ve chosen to build the team I&rsquo;ll work with for the next decade. The "
+        "manifesto came before the curriculum.",
+        "MyAiNativeTown is how that team begins: an agent learning and building program. Cohort 01 "
+        "learns by shipping one real agent for two towns in Haryana, live, on alternate days. The "
+        "program has its own agent too. It answers questions about the program and writes the log "
+        "entries, so every hypothesis, action and wrong answer stays readable, including by you.",
+        "Their fee is due only when someone hires them. So I&rsquo;m paid only if they&rsquo;re worth "
+        "hiring.",
+    ],
+    "puzzle": "Some of them will build with me. Some will build with you. Whose log would you want "
+              "to read first?",
+}
 
 PROCESS = {
     "lede": "Four weeks from first call to a result you can defend in a board meeting. "
@@ -194,6 +235,9 @@ POSTS = [
 ]
 
 ICONS = {
+    "map-pin":
+        '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>'
+        '<circle cx="12" cy="10" r="3"/>',
     "graduation-cap":
         '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>'
         '<path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
@@ -531,7 +575,8 @@ def page_index():
 
     cards = []
     for i, a in enumerate(AGENTS, start=1):
-        badge = f'<p class="agent-badge">{a["badge"]}</p>' if a.get("badge") else ""
+        badge_cls = "agent-badge agent-badge-live" if a.get("badge_live") else "agent-badge"
+        badge = f'<p class="{badge_cls}">{a["badge"]}</p>' if a.get("badge") else ""
         inner = (
             f'<div class="agent-step" aria-hidden="true">{i}</div>'
             f'<div class="agent-icon">{icon(a["icon"])}</div>'
@@ -539,7 +584,10 @@ def page_index():
             f'{badge}'
             f'<p class="agent-desc">{a["description"]}</p>'
         )
-        actions = []
+        actions = [
+            f'<a class="agent-action" href="{esc(h)}"{link_attrs(h)}>{label} &rarr;</a>'
+            for label, h in a.get("actions", [])
+        ]
         if a.get("href"):
             cta = a.get("cta", "Read more")
             actions.append(
@@ -561,6 +609,8 @@ def page_index():
         f'<p class="process-body">{s["body"]}</p></div>'
         for s in PROCESS["steps"]
     )
+
+    town_paras = "".join(f'<p>{p}</p>' for p in TOWN["paras"])
 
     facts = "".join(
         f'<div class="about-fact"><dt>{k}</dt><dd>{v}</dd></div>' for k, v in ABOUT["facts"]
@@ -600,6 +650,23 @@ def page_index():
       <h2><span class="g">Portfolio</span><br>of Agents</h2>
     </div>
     <div class="agent-grid">{''.join(cards)}</div>
+  </div>
+</section>
+
+<section id="town" class="section section-page town-section">
+  <div class="wrap town-grid">
+    <div class="town-head">
+      <p class="eyebrow">{TOWN['eyebrow']}</p>
+      <h2>{TOWN['h2']}</h2>
+    </div>
+    <div class="town-body">
+      {town_paras}
+      <p class="town-puzzle">{TOWN['puzzle']}</p>
+      <div class="town-actions">
+        {btn(LINKS['manifesto'], 'Read the manifesto', 'secondary')}
+        {btn('index.html#hire', 'Talk to me about Cohort 01', 'ghost')}
+      </div>
+    </div>
   </div>
 </section>
 
